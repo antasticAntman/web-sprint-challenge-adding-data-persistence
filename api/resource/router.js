@@ -17,6 +17,17 @@ router.get('/', (req, res, next) => {
         .catch(next)
 })
 
+router.post('/', async (req, res, next) => {
+    // const {resource_name, resource_description} = req.body
+    try {
+        const resource = await Resources.create(req.body)
+        res.json(resource)
+    }
+    catch (err) {
+        next(err)
+    }
+})
+
 router.use((err, req, res, next) => { //eslint-disable-line
     res.status(err.status || 500).json({
         customMessage:"Something is incorrect",
